@@ -1,0 +1,37 @@
+package com.example.persistence.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+@Getter
+@Setter(AccessLevel.PRIVATE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class DormitoryApplyForm {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long formId;
+    @Enumerated(EnumType.STRING)
+    private DegreeLevel degreeLevel;
+    private Integer buildingNumber;
+    private Integer roomNumber;
+    @ElementCollection
+    private List<FamilyMember> familyMembers;
+    @CreationTimestamp
+    private Timestamp date;
+    @Enumerated(EnumType.STRING)
+    private FormStatus formStatus;
+    @OneToOne
+    @JoinColumn(name = "keep_room_form_id")
+    private DormitoryKeepRoomForm keepRoomForm;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+}

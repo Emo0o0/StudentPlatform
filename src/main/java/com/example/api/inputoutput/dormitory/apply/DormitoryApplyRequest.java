@@ -1,0 +1,20 @@
+package com.example.api.inputoutput.dormitory.apply;
+
+import com.example.api.contract.OperationRequest;
+import lombok.*;
+
+import java.util.List;
+
+@Getter
+@Setter(AccessLevel.PRIVATE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DormitoryApplyRequest implements OperationRequest {
+
+    private String degreeLevel;
+    private int buildingNumber;
+    private int roomNumber;
+    private List<FamilyMemberDto> familyMembers;
+    private Long keepRoomFormId;
+}
