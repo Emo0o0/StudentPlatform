@@ -1,12 +1,22 @@
 package com.example.persistence.entity.scholarship.firstyear;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Embeddable
+@Getter
+@Setter(AccessLevel.PRIVATE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class FirstYearScholarshipInfo {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     @Enumerated(EnumType.STRING)
     private ProfessionalDirection professionalDirection;
     private Double bulgarianLanguageGrade;

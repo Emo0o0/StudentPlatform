@@ -4,9 +4,7 @@ import com.example.persistence.entity.enums.CourseYear;
 import com.example.persistence.entity.enums.DegreeLevel;
 import com.example.persistence.entity.enums.Faculty;
 import com.example.persistence.entity.enums.Semester;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -14,9 +12,12 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@Entity
 public class PersonalInfo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     private String email;
     private String firstName;
     private String secondName;

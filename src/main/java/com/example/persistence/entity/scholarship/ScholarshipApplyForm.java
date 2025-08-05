@@ -22,31 +22,43 @@ public class ScholarshipApplyForm {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long formId;
-    @Embedded
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "personal_info_id")
     private PersonalInfo personalInfo;
+
     //успех от предходните 2 семестъра
     private Double previousGPA;
+
     @Enumerated(EnumType.STRING)
     private ScholarshipType scholarshipType;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "merit_scholarship_id")
     private MeritScholarshipInfo meritScholarshipInfo;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "merit_with_income_scholarship_id")
     private MeritWithIncomeScholarshipInfo meritWithIncomeInfo;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "social_scholarship_id")
     private SocialScholarshipInfo socialScholarshipInfo;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "first_year_scholarship_id")
     private FirstYearScholarshipInfo firstYearScholarshipInfo;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "foreign_student_scholarship_id")
     private ForeignStudentScholarshipInfo foreignStudentScholarshipInfo;
-    @Embedded
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "special_achievment_scholarship_id")
     private SpecialAchievementScholarshipInfo specialAchievementScholarshipInfo;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "banking_info_id")
     private BankingInfo bankingInfo;
 
 }
