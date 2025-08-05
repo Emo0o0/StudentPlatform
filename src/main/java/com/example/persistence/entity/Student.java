@@ -1,5 +1,9 @@
 package com.example.persistence.entity;
 
+import com.example.persistence.entity.dormitory.DormitoryApplyForm;
+import com.example.persistence.entity.insurance.HealthInsuranceApplyForm;
+import com.example.persistence.entity.insurance.HealthInsuranceLateForm;
+import com.example.persistence.entity.insurance.HealthInsuranceTerminateForm;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.example.persistence.entity;
+package com.example.persistence.entity.enums;
 
 public enum FamilyMemberRelation {
 

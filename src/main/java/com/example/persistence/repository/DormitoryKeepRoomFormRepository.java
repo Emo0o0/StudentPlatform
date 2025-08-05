@@ -1,6 +1,6 @@
 package com.example.persistence.repository;
 
-import com.example.persistence.entity.DormitoryKeepRoomForm;
+import com.example.persistence.entity.dormitory.DormitoryKeepRoomForm;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

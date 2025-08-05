@@ -1,5 +1,9 @@
-package com.example.persistence.entity;
+package com.example.persistence.entity.dormitory;
 
+import com.example.persistence.entity.FamilyMember;
+import com.example.persistence.entity.Student;
+import com.example.persistence.entity.enums.DegreeLevel;
+import com.example.persistence.entity.enums.FormStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

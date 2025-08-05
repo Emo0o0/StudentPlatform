@@ -4,8 +4,8 @@ import com.example.api.inputoutput.healthinsurance.late.HealthInsuranceLateOpera
 import com.example.api.inputoutput.healthinsurance.late.HealthInsuranceLateRequest;
 import com.example.api.inputoutput.healthinsurance.late.HealthInsuranceLateResponse;
 import com.example.core.service.student.StudentContext;
-import com.example.persistence.entity.FormStatus;
-import com.example.persistence.entity.HealthInsuranceLateForm;
+import com.example.persistence.entity.enums.FormStatus;
+import com.example.persistence.entity.insurance.HealthInsuranceLateForm;
 import com.example.persistence.repository.HealthInsuranceLateFormRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

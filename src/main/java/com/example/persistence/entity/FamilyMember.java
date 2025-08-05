@@ -1,5 +1,6 @@
 package com.example.persistence.entity;
 
+import com.example.persistence.entity.enums.FamilyMemberRelation;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

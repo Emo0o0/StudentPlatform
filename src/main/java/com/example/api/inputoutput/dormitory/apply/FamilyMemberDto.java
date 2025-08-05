@@ -1,6 +1,6 @@
 package com.example.api.inputoutput.dormitory.apply;
 
-import com.example.persistence.entity.FamilyMemberRelation;
+import com.example.persistence.entity.enums.FamilyMemberRelation;
 import lombok.*;
 
 @Getter
