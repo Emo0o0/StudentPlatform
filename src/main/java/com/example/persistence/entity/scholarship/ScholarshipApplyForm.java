@@ -1,6 +1,7 @@
 package com.example.persistence.entity.scholarship;
 
 import com.example.persistence.entity.PersonalInfo;
+import com.example.persistence.entity.Student;
 import com.example.persistence.entity.scholarship.achievement.SpecialAchievementScholarshipInfo;
 import com.example.persistence.entity.scholarship.banking.BankingInfo;
 import com.example.persistence.entity.scholarship.firstyear.FirstYearScholarshipInfo;
@@ -10,6 +11,9 @@ import com.example.persistence.entity.scholarship.meritincome.MeritWithIncomeSch
 import com.example.persistence.entity.scholarship.social.SocialScholarshipInfo;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)
@@ -60,5 +64,12 @@ public class ScholarshipApplyForm {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "banking_info_id")
     private BankingInfo bankingInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @CreationTimestamp
+    private LocalDateTime date;
 
 }

@@ -4,6 +4,7 @@ import com.example.persistence.entity.dormitory.DormitoryApplyForm;
 import com.example.persistence.entity.insurance.HealthInsuranceApplyForm;
 import com.example.persistence.entity.insurance.HealthInsuranceLateForm;
 import com.example.persistence.entity.insurance.HealthInsuranceTerminateForm;
+import com.example.persistence.entity.scholarship.ScholarshipApplyForm;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -50,5 +51,8 @@ public class Student {
     private List<HealthInsuranceTerminateForm> healthInsuranceTerminateForms;
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DormitoryApplyForm> dormitoryApplyForms;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ScholarshipApplyForm> scholarshipApplyForms;
+
 
 }
