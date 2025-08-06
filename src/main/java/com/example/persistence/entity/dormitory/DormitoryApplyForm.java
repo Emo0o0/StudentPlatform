@@ -1,6 +1,7 @@
 package com.example.persistence.entity.dormitory;
 
 import com.example.persistence.entity.FamilyMember;
+import com.example.persistence.entity.PersonalInfo;
 import com.example.persistence.entity.Student;
 import com.example.persistence.entity.enums.DegreeLevel;
 import com.example.persistence.entity.enums.FormStatus;
@@ -21,8 +22,9 @@ public class DormitoryApplyForm {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long formId;
-    @Enumerated(EnumType.STRING)
-    private DegreeLevel degreeLevel;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "personal_info_id")
+    private PersonalInfo personalInfo;
     private Integer buildingNumber;
     private Integer roomNumber;
     @ElementCollection
