@@ -7,8 +7,7 @@ import com.example.persistence.entity.enums.FormStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -29,7 +28,7 @@ public class DormitoryApplyForm {
     @ElementCollection
     private List<FamilyMember> familyMembers;
     @CreationTimestamp
-    private Timestamp date;
+    private LocalDateTime date;
     @Enumerated(EnumType.STRING)
     private FormStatus formStatus;
     @OneToOne

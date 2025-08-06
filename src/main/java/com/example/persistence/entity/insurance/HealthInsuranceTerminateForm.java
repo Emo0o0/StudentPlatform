@@ -5,8 +5,7 @@ import com.example.persistence.entity.enums.FormStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)
@@ -24,7 +23,7 @@ public class HealthInsuranceTerminateForm {
     @Column(nullable = false)
     private String terminationReason;
     @CreationTimestamp
-    private Timestamp date;
+    private LocalDateTime date;
     @Enumerated(EnumType.STRING)
     private FormStatus formStatus;
     @ManyToOne
