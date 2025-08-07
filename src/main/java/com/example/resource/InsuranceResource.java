@@ -1,9 +1,5 @@
 package com.example.resource;
 
-import com.example.api.inputoutput.dormitory.apply.DormitoryApplyOperation;
-import com.example.api.inputoutput.dormitory.apply.DormitoryApplyRequest;
-import com.example.api.inputoutput.dormitory.keeproom.DormitoryKeepRoomOperation;
-import com.example.api.inputoutput.dormitory.keeproom.DormitoryKeepRoomRequest;
 import com.example.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyOperation;
 import com.example.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyRequest;
 import com.example.api.inputoutput.healthinsurance.late.HealthInsuranceLateOperation;
@@ -16,9 +12,9 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
-@Path("/form")
+@Path("/form/healthInsurance")
 @Authenticated
-public class FormsResource {
+public class InsuranceResource {
 
     @Inject
     HealthInsuranceApplyOperation healthInsuranceApplyOperation;
@@ -26,13 +22,9 @@ public class FormsResource {
     HealthInsuranceLateOperation healthInsuranceLateOperation;
     @Inject
     HealthInsuranceTerminateOperation healthInsuranceTerminateOperation;
-    @Inject
-    DormitoryApplyOperation dormitoryApplyOperation;
-    @Inject
-    DormitoryKeepRoomOperation dormitoryKeepRoomOperation;
 
     @POST
-    @Path("/healthInsurance/apply")
+    @Path("/apply")
     public Response applyForHealthInsurance(HealthInsuranceApplyRequest input) {
         return Response.status(201)
                 .entity(healthInsuranceApplyOperation.process(input))
@@ -40,7 +32,7 @@ public class FormsResource {
     }
 
     @POST
-    @Path("/healthInsurance/late")
+    @Path("/late")
     public Response applyForLateHealthInsurance(HealthInsuranceLateRequest input) {
         return Response.status(201)
                 .entity(healthInsuranceLateOperation.process(input))
@@ -48,28 +40,10 @@ public class FormsResource {
     }
 
     @POST
-    @Path("/healthInsurance/terminate")
+    @Path("/terminate")
     public Response terminateHealthInsurance(HealthInsuranceTerminateRequest input) {
         return Response.status(201)
                 .entity(healthInsuranceTerminateOperation.process(input))
                 .build();
     }
-
-    @POST
-    @Path("/dormitory/apply")
-    public Response applyForDormitory(DormitoryApplyRequest input) {
-        return Response.status(201)
-                .entity(dormitoryApplyOperation.process(input))
-                .build();
-    }
-
-    @POST
-    @Path("/dormitory/keepRoom")
-    public Response requestToKeepRoom(DormitoryKeepRoomRequest input) {
-        return Response.status(201)
-                .entity(dormitoryKeepRoomOperation.process(input))
-                .build();
-    }
-
-
 }
