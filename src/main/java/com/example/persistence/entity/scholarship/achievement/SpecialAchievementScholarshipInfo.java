@@ -16,7 +16,6 @@ public class SpecialAchievementScholarshipInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private Boolean applyForSpecialAchievement = false;
     private String achievementTopic;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
