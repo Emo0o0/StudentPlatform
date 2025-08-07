@@ -25,5 +25,5 @@ public class SocialScholarshipInfo {
     private List<SocialDocument> socialDocuments = new ArrayList<>();
 
     // For parents with children under 6
-    private Boolean hasMarriage = false;
+    private Boolean hasMarriage;
 }
