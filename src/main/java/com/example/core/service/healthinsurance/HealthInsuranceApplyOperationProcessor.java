@@ -6,7 +6,7 @@ import com.example.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyRes
 import com.example.core.service.student.StudentContext;
 import com.example.persistence.entity.enums.FormStatus;
 import com.example.persistence.entity.insurance.HealthInsuranceApplyForm;
-import com.example.persistence.repository.HealthInsuranceApplyFormRepository;
+import com.example.persistence.repository.insurance.HealthInsuranceApplyFormRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

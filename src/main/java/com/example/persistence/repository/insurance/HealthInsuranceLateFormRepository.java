@@ -1,4 +1,4 @@
-package com.example.persistence.repository;
+package com.example.persistence.repository.insurance;
 
 import com.example.persistence.entity.insurance.HealthInsuranceLateForm;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;

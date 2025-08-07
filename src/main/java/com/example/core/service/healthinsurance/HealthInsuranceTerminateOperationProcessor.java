@@ -6,7 +6,7 @@ import com.example.api.inputoutput.healthinsurance.terminate.HealthInsuranceTerm
 import com.example.core.service.student.StudentContext;
 import com.example.persistence.entity.enums.FormStatus;
 import com.example.persistence.entity.insurance.HealthInsuranceTerminateForm;
-import com.example.persistence.repository.HealthInsuranceTerminateFormRepository;
+import com.example.persistence.repository.insurance.HealthInsuranceTerminateFormRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

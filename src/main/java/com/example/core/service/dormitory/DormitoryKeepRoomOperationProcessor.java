@@ -5,7 +5,7 @@ import com.example.api.inputoutput.dormitory.keeproom.DormitoryKeepRoomRequest;
 import com.example.api.inputoutput.dormitory.keeproom.DormitoryKeepRoomResponse;
 import com.example.persistence.entity.dormitory.DormitoryKeepRoomForm;
 import com.example.persistence.entity.enums.FormStatus;
-import com.example.persistence.repository.DormitoryKeepRoomFormRepository;
+import com.example.persistence.repository.dormitory.DormitoryKeepRoomFormRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

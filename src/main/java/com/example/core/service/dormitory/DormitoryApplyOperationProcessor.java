@@ -7,10 +7,9 @@ import com.example.core.service.student.StudentContext;
 import com.example.persistence.entity.*;
 import com.example.persistence.entity.dormitory.DormitoryApplyForm;
 import com.example.persistence.entity.dormitory.DormitoryKeepRoomForm;
-import com.example.persistence.entity.enums.DegreeLevel;
 import com.example.persistence.entity.enums.FormStatus;
-import com.example.persistence.repository.DormitoryApplyFormRepository;
-import com.example.persistence.repository.DormitoryKeepRoomFormRepository;
+import com.example.persistence.repository.dormitory.DormitoryApplyFormRepository;
+import com.example.persistence.repository.dormitory.DormitoryKeepRoomFormRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -37,7 +36,6 @@ public class DormitoryApplyOperationProcessor implements DormitoryApplyOperation
         }
 
         DormitoryApplyForm dormitoryApplyForm = DormitoryApplyForm.builder()
-                .degreeLevel(DegreeLevel.valueOf(request.getDegreeLevel()))
                 .buildingNumber(request.getBuildingNumber())
                 .roomNumber(request.getRoomNumber())
                 .familyMembers(
