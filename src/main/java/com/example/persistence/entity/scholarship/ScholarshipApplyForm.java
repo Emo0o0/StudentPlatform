@@ -1,6 +1,6 @@
 package com.example.persistence.entity.scholarship;
 
-import com.example.persistence.entity.PersonalInfo;
+import com.example.persistence.entity.PersonalAcademicInfo;
 import com.example.persistence.entity.Student;
 import com.example.persistence.entity.scholarship.achievement.SpecialAchievementScholarshipInfo;
 import com.example.persistence.entity.scholarship.banking.BankingInfo;
@@ -29,7 +29,7 @@ public class ScholarshipApplyForm {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "personal_info_id")
-    private PersonalInfo personalInfo;
+    private PersonalAcademicInfo personalAcademicInfo;
 
     //успех от предходните 2 семестъра
     private Double previousGPA;

@@ -13,11 +13,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PersonalInfo {
+public class PersonalAcademicInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    //personal info
     private String email;
     private String firstName;
     private String secondName;
@@ -25,8 +26,14 @@ public class PersonalInfo {
     private String egn;
     private String address;
     private String phoneNumber;
-    private String facultyNumber;
+    private String placeOfResidence;
+    private String streetName;
+    private Integer streetNumber;
+    private String entrance;
+    private Integer floor;
+    private Integer flatNumber;
     //academic info
+    private String facultyNumber;
     @Enumerated(EnumType.STRING)
     private CourseYear courseYear;
     @Enumerated(EnumType.STRING)
@@ -35,7 +42,9 @@ public class PersonalInfo {
     private DegreeLevel degreeLevel;
     @Enumerated(EnumType.STRING)
     private Faculty faculty;
-    private String specialization;
+    private String specialty;
+    private Integer group;
+    private Character subGroup;
 
 
 }
