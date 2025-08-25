@@ -31,11 +31,6 @@ public class StudentRepository implements PanacheRepository<Student> {
                 status, faculty, department, specialty).count();
     }
 
-    public long countByStatus2(StudentStatus status) {
-        return find("personalAcademicInfo.studentStatus = ?1",
-                status).count();
-    }
-
     // Брой студенти не се явили на изпит (поне в една дисциплина)
     public long countNotAttendedExam(Faculty faculty, String department, String specialty) {
         return find("select distinct s from Student s join s.marks m " +

@@ -4,15 +4,11 @@ import com.example.api.inputoutput.student.countbyspecialty.CountStudentsBySpeci
 import com.example.api.inputoutput.student.countbyspecialty.CountStudentsBySpecialtyRequest;
 import com.example.api.inputoutput.student.countbystatus.CountStudentsByStatusOperation;
 import com.example.api.inputoutput.student.countbystatus.CountStudentsByStatusRequest;
-import com.example.persistence.entity.PersonalAcademicInfo;
-import com.example.persistence.entity.StudentStatus;
-import com.example.persistence.entity.enums.CourseYear;
-import com.example.persistence.entity.enums.DegreeLevel;
-import com.example.persistence.entity.enums.Faculty;
-import com.example.persistence.entity.enums.Semester;
-import com.example.persistence.repository.PersonalAcademicInfoRepository;
+import com.example.api.inputoutput.student.countfailed.CountFailedStudentsOperation;
+import com.example.api.inputoutput.student.countfailed.CountFailedStudentsRequest;
+import com.example.api.inputoutput.student.countnotattendedexam.CountStudentsNotAttendedExamOperation;
+import com.example.api.inputoutput.student.countnotattendedexam.CountStudentsNotAttendedExamRequest;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
@@ -25,6 +21,10 @@ public class StudentResource {
     CountStudentsBySpecialtyOperation countStudentsBySpecialtyOperation;
     @Inject
     CountStudentsByStatusOperation countStudentsByStatusOperation;
+    @Inject
+    CountStudentsNotAttendedExamOperation countStudentsNotAttendedExamOperation;
+    @Inject
+    CountFailedStudentsOperation countFailedStudentsOperation;
 
     @GET
     @Path("/countBySpecialty")
@@ -57,4 +57,35 @@ public class StudentResource {
                 .build();
     }
 
+    @GET
+    @Path("/countNotAttended")
+    public Response countStudentsNotAttendedExam(@QueryParam("faculty") String faculty,
+                                                 @QueryParam("department") String department,
+                                                 @QueryParam("specialty") String specialty) {
+        CountStudentsNotAttendedExamRequest input = CountStudentsNotAttendedExamRequest.builder()
+                .faculty(faculty)
+                .department(department)
+                .specialty(specialty)
+                .build();
+
+        return Response.status(200)
+                .entity(countStudentsNotAttendedExamOperation.process(input))
+                .build();
+    }
+
+    @GET
+    @Path("countFailed")
+    public Response countFailedStudents(@QueryParam("faculty") String faculty,
+                                        @QueryParam("department") String department,
+                                        @QueryParam("specialty") String specialty) {
+        CountFailedStudentsRequest input = CountFailedStudentsRequest.builder()
+                .faculty(faculty)
+                .department(department)
+                .specialty(specialty)
+                .build();
+
+        return Response.status(200)
+                .entity(countFailedStudentsOperation.process(input))
+                .build();
+    }
 }
