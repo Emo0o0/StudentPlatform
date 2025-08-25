@@ -19,7 +19,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/scholarship")
-@Authenticated
+//@Authenticated
 public class ScholarshipResource {
 
     @Inject

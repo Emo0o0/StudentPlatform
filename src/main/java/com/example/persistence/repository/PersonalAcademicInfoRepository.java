@@ -5,5 +5,5 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class PersonalInfoRepository implements PanacheRepository<PersonalAcademicInfo> {
+public class PersonalAcademicInfoRepository implements PanacheRepository<PersonalAcademicInfo> {
 }

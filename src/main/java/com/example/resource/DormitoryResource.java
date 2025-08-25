@@ -11,7 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/dormitory")
-@Authenticated
+//@Authenticated
 public class DormitoryResource {
 
     @Inject

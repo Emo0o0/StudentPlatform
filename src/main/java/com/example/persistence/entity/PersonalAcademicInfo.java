@@ -41,10 +41,12 @@ public class PersonalAcademicInfo {
     @Enumerated(EnumType.STRING)
     private DegreeLevel degreeLevel;
     @Enumerated(EnumType.STRING)
+    private StudentStatus studentStatus;
+    @Enumerated(EnumType.STRING)
     private Faculty faculty;
+    private String department;
     private String specialty;
-    private Integer group;
+    private Integer studentGroup;
     private Character subGroup;
-
 
 }

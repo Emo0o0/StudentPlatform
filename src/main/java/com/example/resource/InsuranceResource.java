@@ -13,7 +13,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/healthInsurance")
-@Authenticated
+//@Authenticated
 public class InsuranceResource {
 
     @Inject

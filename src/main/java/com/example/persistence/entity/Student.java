@@ -8,6 +8,7 @@ import com.example.persistence.entity.scholarship.ScholarshipApplyForm;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -21,27 +22,14 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String fullName;
-    @Column(unique = true)
-    private String email;
-    @Column(unique = true)
-    private String facultyNumber;
-    private String specialty;
-    private Integer groupNumber;
-    private Character subGroup;
-    private String academicYear;
-    //more personal info
-    private Integer uniYear;
-    private String placeOfResidence;
-    private String streetName;
-    private Integer streetNumber;
-    private String entrance;
-    private Integer floor;
-    private Integer flatNumber;
-    @Column(unique = true)
-    private String egn;
-    @Column(unique = true)
-    private String phoneNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personal_info_id", referencedColumnName = "id")
+    private PersonalAcademicInfo personalAcademicInfo;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mark> marks = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HealthInsuranceApplyForm> healthInsuranceApplyForms;
