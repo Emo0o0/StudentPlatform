@@ -13,6 +13,7 @@ import com.example.persistence.repository.scholarship.ScholarshipApplyFormReposi
 import com.example.persistence.repository.scholarship.achievement.SpecialAchievementScholarshipInfoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class AchievementScholarshipApplyProcessor implements AchievementScholarshipApplyOperation {
@@ -27,6 +28,7 @@ public class AchievementScholarshipApplyProcessor implements AchievementScholars
     StudentContext studentContext;
 
     @Override
+    @Transactional
     public AchievementScholarshipApplyResponse process(AchievementScholarshipApplyRequest request) {
 
         SpecialAchievementScholarshipInfo specialAchievementScholarshipInfo = SpecialAchievementScholarshipInfo.builder()

@@ -1,5 +1,6 @@
 package com.example.api.inputoutput.scholarship.firstyear;
 
+import com.example.api.PersonalAcademicInfoDTO;
 import com.example.api.contract.OperationRequest;
 import com.example.api.inputoutput.scholarship.BankingInfoDTO;
 import lombok.*;
@@ -10,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FirstYearScholarshipApplyRequest implements OperationRequest {
+    private PersonalAcademicInfoDTO personalAcademicInfo;
     private String professionalDirection;
     private Double bulgarianLanguageGrade;
     private String secondExamSubject;

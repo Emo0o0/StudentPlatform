@@ -1,5 +1,6 @@
 package com.example.api.inputoutput.scholarship.meritincome;
 
+import com.example.api.PersonalAcademicInfoDTO;
 import com.example.api.contract.OperationRequest;
 import com.example.api.inputoutput.scholarship.BankingInfoDTO;
 import lombok.*;
@@ -14,6 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MeritIncomeScholarshipApplyRequest implements OperationRequest {
+
+    private PersonalAcademicInfoDTO personalAcademicInfo;
+    private Double previousGPA;
 
     private String familyStatus;
 
@@ -46,5 +50,4 @@ public class MeritIncomeScholarshipApplyRequest implements OperationRequest {
     private BigDecimal monthlyIncomePerMember = BigDecimal.ZERO;
 
     private BankingInfoDTO bankingInfo;
-
 }

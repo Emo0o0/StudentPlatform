@@ -14,6 +14,7 @@ import com.example.persistence.repository.scholarship.ScholarshipApplyFormReposi
 import com.example.persistence.repository.scholarship.social.SocialScholarshipInfoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class SocialScholarshipApplyProcessor implements SocialScholarshipApplyOperation {
@@ -28,6 +29,7 @@ public class SocialScholarshipApplyProcessor implements SocialScholarshipApplyOp
     StudentContext studentContext;
 
     @Override
+    @Transactional
     public SocialScholarshipApplyResponse process(SocialScholarshipApplyRequest request) {
 
         SocialScholarshipInfo socialScholarshipInfo = SocialScholarshipInfo.builder()

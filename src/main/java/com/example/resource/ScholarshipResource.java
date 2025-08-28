@@ -12,7 +12,6 @@ import com.example.api.inputoutput.scholarship.meritincome.MeritIncomeScholarshi
 import com.example.api.inputoutput.scholarship.meritincome.MeritIncomeScholarshipApplyRequest;
 import com.example.api.inputoutput.scholarship.social.SocialScholarshipApplyOperation;
 import com.example.api.inputoutput.scholarship.social.SocialScholarshipApplyRequest;
-import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -36,7 +35,7 @@ public class ScholarshipResource {
     SocialScholarshipApplyOperation socialScholarshipApplyOperation;
 
     @POST
-    @Path("/achievment")
+    @Path("/achievement")
     public Response applyForSpecialAchievement(AchievementScholarshipApplyRequest input) {
         return Response.status(201)
                 .entity(achievementScholarshipApplyOperation.process(input))

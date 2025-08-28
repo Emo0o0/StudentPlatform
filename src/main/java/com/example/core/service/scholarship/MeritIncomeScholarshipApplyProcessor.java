@@ -2,15 +2,22 @@ package com.example.core.service.scholarship;
 
 import com.example.api.inputoutput.scholarship.meritincome.*;
 import com.example.core.service.student.StudentContext;
+import com.example.persistence.entity.PersonalAcademicInfo;
+import com.example.persistence.entity.enums.CourseYear;
+import com.example.persistence.entity.enums.DegreeLevel;
+import com.example.persistence.entity.enums.Faculty;
+import com.example.persistence.entity.enums.Semester;
 import com.example.persistence.entity.scholarship.ScholarshipApplyForm;
 import com.example.persistence.entity.scholarship.ScholarshipType;
 import com.example.persistence.entity.scholarship.banking.BankingInfo;
 import com.example.persistence.entity.scholarship.meritincome.*;
+import com.example.persistence.repository.PersonalAcademicInfoRepository;
 import com.example.persistence.repository.banking.BankingInfoRepository;
 import com.example.persistence.repository.scholarship.ScholarshipApplyFormRepository;
 import com.example.persistence.repository.scholarship.meritincome.MeritWithIncomeScholarshipInfoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -26,9 +33,12 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
     @Inject
     BankingInfoRepository bankingInfoRepository;
     @Inject
+    PersonalAcademicInfoRepository personalAcademicInfoRepository;
+    @Inject
     StudentContext studentContext;
 
     @Override
+    @Transactional
     public MeritIncomeScholarshipApplyResponse process(MeritIncomeScholarshipApplyRequest request) {
 
         MeritWithIncomeScholarshipInfo meritWithIncomeScholarshipInfo = MeritWithIncomeScholarshipInfo.builder()
@@ -36,6 +46,31 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
                 .familyIncomeInfo(mapFamilyIncome(request))
                 .build();
         meritWithIncomeScholarshipInfoRepository.persist(meritWithIncomeScholarshipInfo);
+
+        PersonalAcademicInfo personalAcademicInfo = PersonalAcademicInfo.builder()
+                .email(request.getPersonalAcademicInfo().getEmail())
+                .firstName(request.getPersonalAcademicInfo().getFirstName())
+                .secondName(request.getPersonalAcademicInfo().getSecondName())
+                .lastName(request.getPersonalAcademicInfo().getLastName())
+                .egn(request.getPersonalAcademicInfo().getEgn())
+                .address(request.getPersonalAcademicInfo().getAddress())
+                .phoneNumber(request.getPersonalAcademicInfo().getPhoneNumber())
+                .placeOfResidence(request.getPersonalAcademicInfo().getPlaceOfResidence())
+                .streetName(request.getPersonalAcademicInfo().getStreetName())
+                .streetNumber(request.getPersonalAcademicInfo().getStreetNumber())
+                .entrance(request.getPersonalAcademicInfo().getEntrance())
+                .floor(request.getPersonalAcademicInfo().getFloor())
+                .flatNumber(request.getPersonalAcademicInfo().getFlatNumber())
+                .facultyNumber(request.getPersonalAcademicInfo().getFacultyNumber())
+                .courseYear(CourseYear.valueOf(request.getPersonalAcademicInfo().getCourseYear()))
+                .semester(Semester.valueOf(request.getPersonalAcademicInfo().getSemester()))
+                .degreeLevel(DegreeLevel.valueOf(request.getPersonalAcademicInfo().getDegreeLevel()))
+                .faculty(Faculty.valueOf(request.getPersonalAcademicInfo().getFaculty()))
+                .specialty(request.getPersonalAcademicInfo().getSpecialty())
+                .studentGroup(request.getPersonalAcademicInfo().getStudentGroup())
+                .subGroup(request.getPersonalAcademicInfo().getSubGroup())
+                .build();
+        personalAcademicInfoRepository.persist(personalAcademicInfo);
 
         BankingInfo bankingInfo = BankingInfo.builder()
                 .bankName(request.getBankingInfo().getBankName())
@@ -45,8 +80,9 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
         bankingInfoRepository.persist(bankingInfo);
 
         ScholarshipApplyForm scholarshipApplyForm = ScholarshipApplyForm.builder()
+                .previousGPA(request.getPreviousGPA())
                 .meritWithIncomeInfo(meritWithIncomeScholarshipInfo)
-                .scholarshipType(ScholarshipType.SPECIAL_ACHIEVEMENTS)
+                .scholarshipType(ScholarshipType.MERIT_WITH_INCOME)
                 .bankingInfo(bankingInfo)
                 .student(studentContext.getCurrentStudent())
                 .build();
