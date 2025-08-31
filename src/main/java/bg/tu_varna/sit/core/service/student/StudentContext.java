@@ -11,6 +11,7 @@ public class StudentContext {
 
     @Inject
     StudentRepository studentRepository;
+
     @Inject
 //    SecurityIdentity securityIdentity;
 
@@ -18,6 +19,8 @@ public class StudentContext {
 //        String facultyNumber = securityIdentity.getPrincipal().getName().substring(1, 9);
 //        return studentRepository.findByFacultyNumber(facultyNumber)
 //                .orElseThrow(() -> new StudentNotFoundException("Student with faculty number [" + facultyNumber + "] was not found"));
+//        return studentRepository.findByFacultyNumber("12345678")
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
         return null;
     }
 

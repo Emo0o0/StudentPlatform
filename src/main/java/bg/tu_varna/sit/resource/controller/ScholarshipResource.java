@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.resource;
+package bg.tu_varna.sit.resource.controller;
 
 import bg.tu_varna.sit.api.inputoutput.scholarship.achievement.apply.AchievementScholarshipApplyOperation;
 import bg.tu_varna.sit.api.inputoutput.scholarship.achievement.apply.AchievementScholarshipApplyRequest;
