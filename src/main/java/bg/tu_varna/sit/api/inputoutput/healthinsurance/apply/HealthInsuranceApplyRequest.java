@@ -1,5 +1,6 @@
 package bg.tu_varna.sit.api.inputoutput.healthinsurance.apply;
 
+import bg.tu_varna.sit.api.PersonalAcademicInfoDTO;
 import bg.tu_varna.sit.api.contract.OperationRequest;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class HealthInsuranceApplyRequest implements OperationRequest {
 
+    private PersonalAcademicInfoDTO personalAcademicInfo;
     private Boolean isReceivingWorkRelatedIncome;
     private Boolean isReceivingPension;
     private Boolean isReceivingOtherInsuredIncome;

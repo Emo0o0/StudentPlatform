@@ -45,7 +45,7 @@ public class MarkResource {
                                        @QueryParam("specialty") String specialty) {
 
         return Response.status(200)
-                .entity(markRepository.getSpecialtyAverages(Faculty.valueOf(faculty), department, specialty))
+//                .entity(markRepository.getSpecialtyAverages(Faculty.valueOf(faculty), department, specialty))
                 .build();
     }
 

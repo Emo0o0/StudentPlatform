@@ -4,6 +4,7 @@ import bg.tu_varna.sit.api.inputoutput.scholarship.social.SocialScholarshipApply
 import bg.tu_varna.sit.api.inputoutput.scholarship.social.SocialScholarshipApplyRequest;
 import bg.tu_varna.sit.api.inputoutput.scholarship.social.SocialScholarshipApplyResponse;
 import bg.tu_varna.sit.core.service.student.StudentContext;
+import bg.tu_varna.sit.persistence.entity.enums.FormStatus;
 import bg.tu_varna.sit.persistence.entity.scholarship.ScholarshipApplyForm;
 import bg.tu_varna.sit.persistence.entity.scholarship.ScholarshipType;
 import bg.tu_varna.sit.persistence.entity.scholarship.banking.BankingInfo;
@@ -50,6 +51,7 @@ public class SocialScholarshipApplyProcessor implements SocialScholarshipApplyOp
                 .socialScholarshipInfo(socialScholarshipInfo)
                 .scholarshipType(ScholarshipType.SPECIAL_ACHIEVEMENTS)
                 .bankingInfo(bankingInfo)
+                .formStatus(FormStatus.SENT)
                 .student(studentContext.getCurrentStudent())
                 .build();
         scholarshipApplyFormRepository.persist(scholarshipApplyForm);

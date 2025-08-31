@@ -9,5 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class StudentAverageDTO {
     private Long studentId;
+    private String studentName;
+    private String studentFacultyNumber;
     private double averageGrade;
 }

@@ -38,4 +38,8 @@ public class DormitoryApplyForm {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
+    public void updateStatus(FormStatus status){
+        this.formStatus=status;
+    }
 }

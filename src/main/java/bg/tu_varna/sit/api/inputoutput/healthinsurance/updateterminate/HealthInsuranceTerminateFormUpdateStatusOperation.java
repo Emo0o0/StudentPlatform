@@ -1,0 +1,6 @@
+package bg.tu_varna.sit.api.inputoutput.healthinsurance.updateterminate;
+
+import bg.tu_varna.sit.api.contract.OperationProcessor;
+
+public interface HealthInsuranceTerminateFormUpdateStatusOperation extends OperationProcessor<HealthInsuranceTerminateFormUpdateStatusRequest, HealthInsuranceTerminateFormUpdateStatusResponse> {
+}

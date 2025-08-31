@@ -12,9 +12,12 @@ import bg.tu_varna.sit.api.inputoutput.scholarship.meritincome.MeritIncomeSchola
 import bg.tu_varna.sit.api.inputoutput.scholarship.meritincome.MeritIncomeScholarshipApplyRequest;
 import bg.tu_varna.sit.api.inputoutput.scholarship.social.SocialScholarshipApplyOperation;
 import bg.tu_varna.sit.api.inputoutput.scholarship.social.SocialScholarshipApplyRequest;
+import bg.tu_varna.sit.api.inputoutput.scholarship.updatestatus.ScholarshipFormUpdateStatusOperation;
+import bg.tu_varna.sit.api.inputoutput.scholarship.updatestatus.ScholarshipFormUpdateStatusRequest;
+import bg.tu_varna.sit.api.inputoutput.student.getscholarshipforms.StudentGetScholarshipFormsOperation;
+import bg.tu_varna.sit.api.inputoutput.student.getscholarshipforms.StudentGetScholarshipFormsRequest;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/scholarship")
@@ -33,6 +36,11 @@ public class ScholarshipResource {
     MeritScholarshipApplyOperation meritScholarshipApplyOperation;
     @Inject
     SocialScholarshipApplyOperation socialScholarshipApplyOperation;
+    @Inject
+    StudentGetScholarshipFormsOperation studentGetScholarshipFormsOperation;
+
+    @Inject
+    ScholarshipFormUpdateStatusOperation scholarshipFormUpdateStatusOperation;
 
     @POST
     @Path("/achievement")
@@ -79,6 +87,37 @@ public class ScholarshipResource {
     public Response applyForSocial(SocialScholarshipApplyRequest input) {
         return Response.status(201)
                 .entity(socialScholarshipApplyOperation.process(input))
+                .build();
+    }
+
+    @GET
+    @Path("/")
+    public Response getScholarshipForms(@QueryParam("studentId") String studentId,
+                                        @QueryParam("specialty") String specialty,
+                                        @QueryParam("scholarshipType") String scholarshipType) {
+
+
+        StudentGetScholarshipFormsRequest input = StudentGetScholarshipFormsRequest.builder()
+                .studentId(studentId)
+                .specialty(specialty)
+                .scholarshipType(scholarshipType)
+                .build();
+        return Response.status(200)
+                .entity(studentGetScholarshipFormsOperation.process(input))
+                .build();
+    }
+
+    @PUT
+    @Path("/update")
+    public Response updateFormStatus(@QueryParam("formId") String formId,
+                                     @QueryParam("status") String status) {
+        ScholarshipFormUpdateStatusRequest input = ScholarshipFormUpdateStatusRequest.builder()
+                .formId(formId)
+                .formStatus(status)
+                .build();
+
+        return Response.status(200)
+                .entity(scholarshipFormUpdateStatusOperation.process(input))
                 .build();
     }
 

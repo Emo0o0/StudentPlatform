@@ -5,10 +5,7 @@ import bg.tu_varna.sit.api.inputoutput.scholarship.foreign.ForeignScholarshipApp
 import bg.tu_varna.sit.api.inputoutput.scholarship.foreign.ForeignScholarshipOperation;
 import bg.tu_varna.sit.core.service.student.StudentContext;
 import bg.tu_varna.sit.persistence.entity.PersonalAcademicInfo;
-import bg.tu_varna.sit.persistence.entity.enums.CourseYear;
-import bg.tu_varna.sit.persistence.entity.enums.DegreeLevel;
-import bg.tu_varna.sit.persistence.entity.enums.Faculty;
-import bg.tu_varna.sit.persistence.entity.enums.Semester;
+import bg.tu_varna.sit.persistence.entity.enums.*;
 import bg.tu_varna.sit.persistence.entity.scholarship.ScholarshipApplyForm;
 import bg.tu_varna.sit.persistence.entity.scholarship.ScholarshipType;
 import bg.tu_varna.sit.persistence.entity.scholarship.banking.BankingInfo;
@@ -81,6 +78,7 @@ public class ForeignScholarshipProcessor implements ForeignScholarshipOperation 
                 .foreignStudentScholarshipInfo(foreignStudentScholarshipInfo)
                 .scholarshipType(ScholarshipType.FOREIGN_STUDENT)
                 .bankingInfo(bankingInfo)
+                .formStatus(FormStatus.SENT)
                 .student(studentContext.getCurrentStudent())
                 .build();
         scholarshipApplyFormRepository.persist(scholarshipApplyForm);

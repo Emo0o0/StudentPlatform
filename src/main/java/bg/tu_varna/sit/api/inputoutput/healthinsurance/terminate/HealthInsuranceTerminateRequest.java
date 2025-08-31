@@ -1,5 +1,6 @@
 package bg.tu_varna.sit.api.inputoutput.healthinsurance.terminate;
 
+import bg.tu_varna.sit.api.PersonalAcademicInfoDTO;
 import bg.tu_varna.sit.api.contract.OperationRequest;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class HealthInsuranceTerminateRequest implements OperationRequest {
 
+    private PersonalAcademicInfoDTO personalAcademicInfo;
     private String terminationReason;
     private String schoolYear;
 

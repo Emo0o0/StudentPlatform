@@ -19,7 +19,7 @@ public class HealthInsuranceTerminateForm {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long formId;
-    @Column(nullable = false, length = 9)
+    @Column(nullable = false, length = 10)
     private String schoolYear;
     @Column(nullable = false)
     private String terminationReason;
@@ -33,4 +33,8 @@ public class HealthInsuranceTerminateForm {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "personal_info_id")
     private PersonalAcademicInfo personalAcademicInfo;
+
+    public void updateStatus(FormStatus status){
+        this.formStatus=status;
+    }
 }

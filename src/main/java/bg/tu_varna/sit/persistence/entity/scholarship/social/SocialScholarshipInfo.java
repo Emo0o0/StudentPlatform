@@ -24,6 +24,5 @@ public class SocialScholarshipInfo {
     @JoinColumn(name = "application_id")
     private List<SocialDocument> socialDocuments = new ArrayList<>();
 
-    // For parents with children under 6
     private Boolean hasMarriage;
 }

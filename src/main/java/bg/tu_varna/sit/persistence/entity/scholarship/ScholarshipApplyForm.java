@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.persistence.entity.scholarship;
 
 import bg.tu_varna.sit.persistence.entity.Student;
+import bg.tu_varna.sit.persistence.entity.enums.FormStatus;
 import bg.tu_varna.sit.persistence.entity.scholarship.firstyear.FirstYearScholarshipInfo;
 import bg.tu_varna.sit.persistence.entity.scholarship.merit.MeritScholarshipInfo;
 import bg.tu_varna.sit.persistence.entity.scholarship.meritincome.MeritWithIncomeScholarshipInfo;
@@ -65,11 +66,18 @@ public class ScholarshipApplyForm {
     @JoinColumn(name = "banking_info_id")
     private BankingInfo bankingInfo;
 
+    @Enumerated(EnumType.STRING)
+    private FormStatus formStatus;
+
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
     @CreationTimestamp
     private LocalDateTime date;
+
+    public void updateStatus(FormStatus status){
+        this.formStatus=status;
+    }
 
 }

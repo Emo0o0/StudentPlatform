@@ -7,8 +7,11 @@ import bg.tu_varna.sit.persistence.entity.Mark;
 import bg.tu_varna.sit.persistence.entity.enums.Faculty;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.TypedQuery;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ApplicationScoped
 public class MarkRepository implements PanacheRepository<Mark> {
@@ -38,80 +41,71 @@ public class MarkRepository implements PanacheRepository<Mark> {
         return count("subject = ?1 and mark = ?2", subject, mark);
     }
 
-    // Брой не се явили
-    public long countNotAttended(String subject) {
-        return count("subject = ?1 and hasAttendedExam = false", subject);
-    }
-
-    // Брой заверени
-    public long countEligible(String subject) {
-        return count("subject = ?1 and subjectStatus = 'ELIGIBLE'", subject);
-    }
-
-    // Брой незаверени
-    public long countIneligible(String subject) {
-        return count("subject = ?1 and subjectStatus = 'INELIGIBLE'", subject);
-    }
-
-    // Брой "зачита се"
-    public long countRecognized(String subject) {
-        return count("subject = ?1 and mark = 'зачита се'", subject);
-    }
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public List<SubjectStatsDTO> getSubjectStatisticsBySpecialty(Faculty faculty, String department, String specialty) {
-        List<Object[]> results = getEntityManager().createNativeQuery("""
-            select 
-                m.subject,
+        StringBuilder jpql = new StringBuilder("""
+        SELECT 
+            m.subject,
+            CASE 
+                WHEN COUNT(CASE WHEN m.hasAttendedExam = true 
+                                 AND m.subjectStatus = 'ELIGIBLE' 
+                                 AND m.mark IN ('2','3','4','5','6') 
+                           THEN 1 END) > 0
+                THEN AVG(CASE 
+                            WHEN m.hasAttendedExam = true 
+                             AND m.subjectStatus = 'ELIGIBLE' 
+                             AND m.mark IN ('2','3','4','5','6') 
+                         THEN CAST(m.mark AS INTEGER) 
+                         END)
+                ELSE (100.0 * COUNT(CASE 
+                                     WHEN m.hasAttendedExam = true 
+                                      AND m.subjectStatus = 'ELIGIBLE' 
+                                      AND m.mark = 'Зачита се' 
+                                    THEN 1 END)
+                       / NULLIF(COUNT(CASE 
+                                         WHEN m.mark IN ('Зачита се','Не се зачита') 
+                                      THEN 1 END), 0))
+            END,
+            COUNT(CASE WHEN m.mark = '6' THEN 1 END),
+            COUNT(CASE WHEN m.mark = '5' THEN 1 END),
+            COUNT(CASE WHEN m.mark = '4' THEN 1 END),
+            COUNT(CASE WHEN m.mark = '3' THEN 1 END),
+            COUNT(CASE WHEN m.mark = '2' THEN 1 END),
+            COUNT(CASE WHEN m.hasAttendedExam = false THEN 1 END),
+            COUNT(CASE WHEN m.subjectStatus = 'ELIGIBLE' THEN 1 END),
+            COUNT(CASE WHEN m.subjectStatus = 'INELIGIBLE' THEN 1 END)
+        FROM Mark m 
+        JOIN m.student s 
+        JOIN s.personalAcademicInfo p 
+        WHERE 1=1
+        """);
 
-                case 
-                    -- If there are numeric marks, calculate their average
-                    when count(case when m.hasAttendedExam = true 
-                                      and m.subjectStatus = 'ELIGIBLE' 
-                                      and m.mark in ('2','3','4','5','6') 
-                                then 1 end) > 0
-                    then avg(case 
-                                when m.hasAttendedExam = true 
-                                 and m.subjectStatus = 'ELIGIBLE' 
-                                 and m.mark in ('2','3','4','5','6') 
-                             then cast(m.mark as int) 
-                             end)
+        Map<String, Object> parameters = new HashMap<>();
 
-                    -- Else: return % of "Зачита се"
-                    else 100.0 * count(case 
-                                         when m.hasAttendedExam = true 
-                                          and m.subjectStatus = 'ELIGIBLE' 
-                                          and m.mark = 'Зачита се' 
-                                        then 1 end)
-                           / nullif(count(case 
-                                             when m.mark in ('Зачита се','Не се зачита') 
-                                          then 1 end),0)
-                end as averageGradeOrPercent,
+        if (faculty != null) {
+            jpql.append(" AND p.faculty = :faculty");
+            parameters.put("faculty", faculty); // Pass enum directly for JPQL
+        }
+        if (department != null) {
+            jpql.append(" AND p.department = :department");
+            parameters.put("department", department);
+        }
+        if (specialty != null) {
+            jpql.append(" AND p.specialty = :specialty");
+            parameters.put("specialty", specialty);
+        }
 
-                count(case when m.mark = '6' then 1 end) as sixes,
-                count(case when m.mark = '5' then 1 end) as fives,
-                count(case when m.mark = '4' then 1 end) as fours,
-                count(case when m.mark = '3' then 1 end) as threes,
-                count(case when m.mark = '2' then 1 end) as twos,
-                count(case when m.hasAttendedExam = false then 1 end) as notAttended,
-                count(case when m.subjectStatus = 'ELIGIBLE' then 1 end) as eligible,
-                count(case when m.subjectStatus = 'INELIGIBLE' then 1 end) as ineligible
+        jpql.append(" GROUP BY m.subject");
 
-            from mark m
-            join student s on m.student_id = s.id
-            join personalacademicinfo p on s.personal_info_id = p.id
-            where p.faculty = ?1 and p.department = ?2 and p.specialty = ?3
-            group by m.subject
-            """)
-                .setParameter(1, faculty.name())
-                .setParameter(2, department)
-                .setParameter(3, specialty)
-                .getResultList();
+        TypedQuery<Object[]> query = getEntityManager().createQuery(jpql.toString(), Object[].class);
+        parameters.forEach(query::setParameter);
+
+        List<Object[]> results = query.getResultList();
 
         return results.stream().map(r -> SubjectStatsDTO.builder()
                         .subject(r[0].toString())
-                        .averageGrade(r[1] != null ? ((Number) r[1]).doubleValue() : 0.0) // either avg grade or % "Зачита се"
+                        .averageGrade(r[1] != null ? ((Number) r[1]).doubleValue() : 0.0)
                         .sixes(r[2] != null ? ((Number) r[2]).longValue() : 0L)
                         .fives(r[3] != null ? ((Number) r[3]).longValue() : 0L)
                         .fours(r[4] != null ? ((Number) r[4]).longValue() : 0L)
@@ -126,18 +120,18 @@ public class MarkRepository implements PanacheRepository<Mark> {
 
     public List<StudentAverageDTO> getStudentAverages(Faculty faculty, String department, String specialty) {
         List<Object[]> results = getEntityManager().createQuery("""
-            select s.id,
+            select s.id, p.firstName, p.lastName, p.facultyNumber,
                    avg(cast(m.mark as int))
             from Student s
             join s.personalAcademicInfo p
             join s.marks m
-            where p.faculty = :faculty
-              and p.department = :department
-              and p.specialty = :specialty
+            where (:faculty is null or p.faculty = :faculty)
+              and (:department is null or p.department = :department)
+              and (:specialty is null or p.specialty = :specialty)
               and m.hasAttendedExam = true
               and m.subjectStatus = 'ELIGIBLE'
               and m.mark in ('2','3','4','5','6')
-            group by s.id
+            group by s.id, p.firstName, p.lastName, p.facultyNumber
             """, Object[].class)
                 .setParameter("faculty", faculty)
                 .setParameter("department", department)
@@ -147,30 +141,30 @@ public class MarkRepository implements PanacheRepository<Mark> {
         return results.stream()
                 .map(r -> StudentAverageDTO.builder()
                         .studentId((Long) r[0])
-                        .averageGrade(((Number) r[1]).doubleValue())
+                        .studentName(r[1].toString()+" "+r[2].toString()+" ")
+                        .studentFacultyNumber(r[3].toString())
+                        .averageGrade(((Number) r[4]).doubleValue())
                         .build())
                 .toList();
     }
 
-    public List<SpecialtyAverageDTO> getSpecialtyAverages(Faculty faculty, String department, String specialty) {
+    public List<SpecialtyAverageDTO> getSpecialtyAverages(String specialty) {
         List<Object[]> results = getEntityManager().createNativeQuery("""
-            select case when grouping(p.courseyear) = 1 then 'ALL'
+            select case when grouping(p.courseyear) = 1 then 'ВСИЧКИ'
                         else p.courseyear end as courseYear,
                    avg(cast(m.mark as int)) as averageGrade
             from student s
             join personalacademicinfo p on s.personal_info_id = p.id
             join mark m on m.student_id = s.id
-            where p.faculty = ?1
-              and p.department = ?2
-              and p.specialty = ?3
+            where p.specialty = ?1
               and m.hasAttendedExam = true
               and m.subjectStatus = 'ELIGIBLE'
               and m.mark in ('2','3','4','5','6')
             group by rollup(p.courseyear)
             """)
-                .setParameter(1, faculty.name())
-                .setParameter(2, department)
-                .setParameter(3, specialty)
+//                .setParameter(1, faculty.name())
+//                .setParameter(2, department)
+                .setParameter(1, specialty)
                 .getResultList();
 
         return results.stream()

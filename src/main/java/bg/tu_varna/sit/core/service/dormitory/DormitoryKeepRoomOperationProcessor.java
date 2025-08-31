@@ -29,6 +29,7 @@ public class DormitoryKeepRoomOperationProcessor implements DormitoryKeepRoomOpe
         dormitoryKeepRoomFormRepository.persist(dormitoryKeepRoomForm);
 
         return DormitoryKeepRoomResponse.builder()
+                .formId(dormitoryKeepRoomForm.getFormId())
                 .success(true)
                 .build();
     }

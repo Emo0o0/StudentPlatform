@@ -1,8 +1,14 @@
 package bg.tu_varna.sit.resource;
 
-import bg.tu_varna.sit.persistence.entity.enums.Faculty;
-import bg.tu_varna.sit.persistence.repository.MarkRepository;
-import bg.tu_varna.sit.persistence.repository.StudentRepository;
+import bg.tu_varna.sit.api.inputoutput.student.getaverages.GetStudentAveragesOperation;
+import bg.tu_varna.sit.api.inputoutput.student.getaverages.GetStudentAveragesRequest;
+import bg.tu_varna.sit.api.inputoutput.student.getspecialtyaverages.GetSpecialtyAveragesOperation;
+import bg.tu_varna.sit.api.inputoutput.student.getspecialtyaverages.GetSpecialtyAveragesRequest;
+import bg.tu_varna.sit.api.inputoutput.student.getstats.GetStudentStatsOperation;
+import bg.tu_varna.sit.api.inputoutput.student.getstats.GetStudentStatsRequest;
+import bg.tu_varna.sit.api.inputoutput.student.getsubjectstats.GetSubjectStatsOperation;
+import bg.tu_varna.sit.api.inputoutput.student.getsubjectstats.GetSubjectStatsRequest;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -12,12 +18,14 @@ import jakarta.ws.rs.core.Response;
 @Path("/query")
 public class QueryResource {
 
-
     @Inject
-    StudentRepository studentRepository;
-
+    GetStudentStatsOperation getStudentStatsOperation;
     @Inject
-    MarkRepository markRepository;
+    GetSubjectStatsOperation getSubjectStatsOperation;
+    @Inject
+    GetStudentAveragesOperation getStudentAveragesOperation;
+    @Inject
+    GetSpecialtyAveragesOperation getSpecialtyAveragesOperation;
 
 
     @GET
@@ -26,8 +34,14 @@ public class QueryResource {
                                     @QueryParam("department") String department,
                                     @QueryParam("specialty") String specialty
     ) {
+        GetStudentStatsRequest input = GetStudentStatsRequest.builder()
+                .faculty(faculty)
+                .department(department)
+                .specialty(specialty)
+                .build();
+
         return Response.status(200)
-                .entity(studentRepository.getStudentStatistics(Faculty.valueOf(faculty), department, specialty))
+                .entity(getStudentStatsOperation.process(input))
                 .build();
     }
 
@@ -37,8 +51,14 @@ public class QueryResource {
                                     @QueryParam("department") String department,
                                     @QueryParam("specialty") String specialty) {
 
+        GetSubjectStatsRequest input = GetSubjectStatsRequest.builder()
+                .faculty(faculty)
+                .department(department)
+                .specialty(specialty)
+                .build();
+
         return Response.status(200)
-                .entity(markRepository.getSubjectStatisticsBySpecialty(Faculty.valueOf(faculty), department, specialty))
+                .entity(getSubjectStatsOperation.process(input))
                 .build();
     }
 
@@ -48,19 +68,27 @@ public class QueryResource {
                                        @QueryParam("department") String department,
                                        @QueryParam("specialty") String specialty) {
 
+        GetStudentAveragesRequest input = GetStudentAveragesRequest.builder()
+                .faculty(faculty)
+                .department(department)
+                .specialty(specialty)
+                .build();
+
         return Response.status(200)
-                .entity(markRepository.getStudentAverages(Faculty.valueOf(faculty), department, specialty))
+                .entity(getStudentAveragesOperation.process(input))
                 .build();
     }
 
     @GET
     @Path("/specialtyAverages")
-    public Response getSpecialtyAverages(@QueryParam("faculty") String faculty,
-                                         @QueryParam("department") String department,
-                                         @QueryParam("specialty") String specialty) {
+    public Response getSpecialtyAverages(@QueryParam("specialty") String specialty) {
+
+        GetSpecialtyAveragesRequest input = GetSpecialtyAveragesRequest.builder()
+                .specialty(specialty)
+                .build();
 
         return Response.status(200)
-                .entity(markRepository.getSpecialtyAverages(Faculty.valueOf(faculty), department, specialty))
+                .entity(getSpecialtyAveragesOperation.process(input))
                 .build();
     }
 

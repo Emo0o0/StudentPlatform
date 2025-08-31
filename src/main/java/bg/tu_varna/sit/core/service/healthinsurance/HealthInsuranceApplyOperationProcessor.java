@@ -2,6 +2,9 @@ package bg.tu_varna.sit.core.service.healthinsurance;
 
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyOperation;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyResponse;
+import bg.tu_varna.sit.persistence.entity.PersonalAcademicInfo;
+import bg.tu_varna.sit.persistence.entity.enums.CourseYear;
+import bg.tu_varna.sit.persistence.entity.enums.Faculty;
 import bg.tu_varna.sit.persistence.entity.insurance.HealthInsuranceApplyForm;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyRequest;
 import bg.tu_varna.sit.core.service.student.StudentContext;
@@ -23,7 +26,26 @@ public class HealthInsuranceApplyOperationProcessor implements HealthInsuranceAp
     @Transactional
     public HealthInsuranceApplyResponse process(HealthInsuranceApplyRequest request) {
 
+        PersonalAcademicInfo personalAcademicInfo = PersonalAcademicInfo.builder()
+                .firstName(request.getPersonalAcademicInfo().getFirstName())
+                .secondName(request.getPersonalAcademicInfo().getSecondName())
+                .lastName(request.getPersonalAcademicInfo().getLastName())
+                .egn(request.getPersonalAcademicInfo().getEgn())
+                .phoneNumber(request.getPersonalAcademicInfo().getPhoneNumber())
+                .courseYear(CourseYear.valueOf(request.getPersonalAcademicInfo().getCourseYear()))
+                .specialty(request.getPersonalAcademicInfo().getSpecialty())
+                .faculty(Faculty.valueOf(request.getPersonalAcademicInfo().getFaculty()))
+                .facultyNumber(request.getPersonalAcademicInfo().getFacultyNumber())
+                .placeOfResidence(request.getPersonalAcademicInfo().getPlaceOfResidence())
+                .streetName(request.getPersonalAcademicInfo().getStreetName())
+                .streetNumber(request.getPersonalAcademicInfo().getStreetNumber())
+                .entrance(request.getPersonalAcademicInfo().getEntrance())
+                .floor(request.getPersonalAcademicInfo().getFloor())
+                .flatNumber(request.getPersonalAcademicInfo().getFlatNumber())
+                .build();
+
         HealthInsuranceApplyForm healthInsuranceApplyForm = HealthInsuranceApplyForm.builder()
+                .personalAcademicInfo(personalAcademicInfo)
                 .isReceivingWorkRelatedIncome(request.getIsReceivingWorkRelatedIncome())
                 .isReceivingPension(request.getIsReceivingPension())
                 .isReceivingOtherInsuredIncome(request.getIsReceivingOtherInsuredIncome())

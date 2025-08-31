@@ -32,4 +32,8 @@ public class HealthInsuranceLateForm {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "personal_info_id")
     private PersonalAcademicInfo personalAcademicInfo;
+
+    public void updateStatus(FormStatus status){
+        this.formStatus=status;
+    }
 }
