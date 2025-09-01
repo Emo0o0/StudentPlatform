@@ -39,14 +39,11 @@ public class DormitoryApplyProcessorTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Create a mock Student object
         Student mockedStudent = mock(Student.class);
 
-        // Stub the fields or methods you need
         when(mockedStudent.getId()).thenReturn(1L);
         when(mockedStudent.getPersonalAcademicInfo()).thenReturn(mock(PersonalAcademicInfo.class));
 
-        // Stub the getCurrentStudent() method to return the mock Student
         when(studentContext.getCurrentStudent()).thenReturn(mockedStudent);
     }
 

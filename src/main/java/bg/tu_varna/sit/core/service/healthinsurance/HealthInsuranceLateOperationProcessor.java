@@ -1,8 +1,10 @@
 package bg.tu_varna.sit.core.service.healthinsurance;
 
+import bg.tu_varna.sit.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyRequest;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.late.HealthInsuranceLateOperation;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.late.HealthInsuranceLateRequest;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.late.HealthInsuranceLateResponse;
+import bg.tu_varna.sit.core.exception.InvalidEnumValueException;
 import bg.tu_varna.sit.persistence.entity.PersonalAcademicInfo;
 import bg.tu_varna.sit.persistence.entity.enums.CourseYear;
 import bg.tu_varna.sit.persistence.entity.enums.Faculty;
@@ -25,6 +27,8 @@ public class HealthInsuranceLateOperationProcessor implements HealthInsuranceLat
     @Override
     @Transactional
     public HealthInsuranceLateResponse process(HealthInsuranceLateRequest request) {
+
+        validateEnums(request);
 
         PersonalAcademicInfo personalAcademicInfo = PersonalAcademicInfo.builder()
                 .firstName(request.getPersonalAcademicInfo().getFirstName())
@@ -56,5 +60,14 @@ public class HealthInsuranceLateOperationProcessor implements HealthInsuranceLat
         return HealthInsuranceLateResponse.builder()
                 .success(true)
                 .build();
+    }
+
+    private void validateEnums(HealthInsuranceLateRequest request){
+        try{
+            CourseYear.valueOf(request.getPersonalAcademicInfo().getCourseYear());
+            Faculty.valueOf(request.getPersonalAcademicInfo().getFaculty());
+        } catch (IllegalArgumentException e){
+            throw new InvalidEnumValueException("Invalid value: " + request.getPersonalAcademicInfo().getCourseYear());
+        }
     }
 }

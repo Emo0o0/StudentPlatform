@@ -3,6 +3,8 @@ package bg.tu_varna.sit.core.service.healthinsurance;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.updatelate.HealthInsuranceLateFormUpdateStatusOperation;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.updatelate.HealthInsuranceLateFormUpdateStatusRequest;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.updatelate.HealthInsuranceLateFormUpdateStatusResponse;
+import bg.tu_varna.sit.core.exception.InvalidEnumValueException;
+import bg.tu_varna.sit.core.exception.healthinsurance.HealthInsuranceLateFormIdNotFoundException;
 import bg.tu_varna.sit.persistence.entity.enums.FormStatus;
 import bg.tu_varna.sit.persistence.entity.insurance.HealthInsuranceLateForm;
 import bg.tu_varna.sit.persistence.repository.insurance.HealthInsuranceLateFormRepository;
@@ -18,8 +20,15 @@ public class HealthInsuranceLateFormUpdateStatusProcessor implements HealthInsur
     @Override
     @Transactional
     public HealthInsuranceLateFormUpdateStatusResponse process(HealthInsuranceLateFormUpdateStatusRequest request) {
-        HealthInsuranceLateForm form = healthInsuranceLateFormRepository.findById(Long.valueOf(request.getFormId()));
-        form.updateStatus(FormStatus.valueOf(request.getFormStatus()));
+
+        HealthInsuranceLateForm form = healthInsuranceLateFormRepository.findByIdOptional(Long.valueOf(request.getFormId()))
+                .orElseThrow(()-> new HealthInsuranceLateFormIdNotFoundException("Health insurance late form with id " + request.getFormId() + " not found!"));
+
+        try {
+            form.updateStatus(FormStatus.valueOf(request.getFormStatus()));
+        } catch (IllegalArgumentException e) {
+            throw new InvalidEnumValueException("Invalid status value: " + request.getFormStatus());
+        }
 
         return HealthInsuranceLateFormUpdateStatusResponse.builder()
                 .success(true)

@@ -33,18 +33,20 @@ public class DormitoryFormUpdateStatusProcessorTest {
         DormitoryApplyForm mockForm = DormitoryApplyForm.builder()
                 .formId(1L)
                 .build();
+        when(dormitoryApplyFormRepository.findByIdOptional(1L)).thenReturn(Optional.of(mockForm));
         when(dormitoryApplyFormRepository.findById(1L)).thenReturn(mockForm);
     }
 
     @Test
     void testProcess() {
-        DormitoryFormUpdateStatusResponse response = dormitoryFormUpdateStatusProcessor.process(DormitoryFormUpdateStatusRequest
-                .builder()
-                .formId("1")
-                .status("APPROVED")
-                .build());
+        DormitoryFormUpdateStatusResponse response = dormitoryFormUpdateStatusProcessor.process(
+                DormitoryFormUpdateStatusRequest
+                        .builder()
+                        .formId("1")
+                        .status("APPROVED")
+                        .build());
         assertTrue(response.isSuccess());
-        verify(dormitoryApplyFormRepository, times(1)).findById(1L);
+        verify(dormitoryApplyFormRepository, times(1)).findByIdOptional(1L);
 
         DormitoryApplyForm updatedForm = dormitoryApplyFormRepository.findById(1L);
         assertEquals(FormStatus.APPROVED, updatedForm.getFormStatus());
@@ -65,6 +67,7 @@ public class DormitoryFormUpdateStatusProcessorTest {
         );
         assertEquals("Dormitory apply form with id 999 not found!", exception.getMessage());
     }
+
     @Test
     void testProcessInvalidEnumValue() {
         DormitoryApplyForm mockForm = DormitoryApplyForm.builder()

@@ -2,6 +2,7 @@ package bg.tu_varna.sit.core.service.healthinsurance;
 
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyOperation;
 import bg.tu_varna.sit.api.inputoutput.healthinsurance.apply.HealthInsuranceApplyResponse;
+import bg.tu_varna.sit.core.exception.InvalidEnumValueException;
 import bg.tu_varna.sit.persistence.entity.PersonalAcademicInfo;
 import bg.tu_varna.sit.persistence.entity.enums.CourseYear;
 import bg.tu_varna.sit.persistence.entity.enums.Faculty;
@@ -25,6 +26,8 @@ public class HealthInsuranceApplyOperationProcessor implements HealthInsuranceAp
     @Override
     @Transactional
     public HealthInsuranceApplyResponse process(HealthInsuranceApplyRequest request) {
+
+        validateEnums(request);
 
         PersonalAcademicInfo personalAcademicInfo = PersonalAcademicInfo.builder()
                 .firstName(request.getPersonalAcademicInfo().getFirstName())
@@ -59,5 +62,14 @@ public class HealthInsuranceApplyOperationProcessor implements HealthInsuranceAp
         return HealthInsuranceApplyResponse.builder()
                 .success(true)
                 .build();
+    }
+
+    private void validateEnums(HealthInsuranceApplyRequest request){
+        try{
+            CourseYear.valueOf(request.getPersonalAcademicInfo().getCourseYear());
+            Faculty.valueOf(request.getPersonalAcademicInfo().getFaculty());
+        } catch (IllegalArgumentException e){
+            throw new InvalidEnumValueException("Invalid value: " + request.getPersonalAcademicInfo().getCourseYear());
+        }
     }
 }
