@@ -45,7 +45,7 @@ public class FamilyIncomeInfo {
     private BigDecimal rent = BigDecimal.ZERO;
     private BigDecimal honorariums = BigDecimal.ZERO;
     private BigDecimal alimony = BigDecimal.ZERO;
-    private BigDecimal businessIncome = BigDecimal.ZERO;
+    private BigDecimal businessIncome = BigDecimal.ZERO;              //
     private BigDecimal otherIncome = BigDecimal.ZERO;
     private BigDecimal totalIncome = BigDecimal.ZERO;
     private BigDecimal monthlyIncomePerMember = BigDecimal.ZERO;

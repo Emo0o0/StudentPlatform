@@ -16,12 +16,13 @@ import bg.tu_varna.sit.api.inputoutput.scholarship.updatestatus.ScholarshipFormU
 import bg.tu_varna.sit.api.inputoutput.scholarship.updatestatus.ScholarshipFormUpdateStatusRequest;
 import bg.tu_varna.sit.api.inputoutput.student.getscholarshipforms.StudentGetScholarshipFormsOperation;
 import bg.tu_varna.sit.api.inputoutput.student.getscholarshipforms.StudentGetScholarshipFormsRequest;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/scholarship")
-//@Authenticated
+@Authenticated
 public class ScholarshipResource {
 
     @Inject

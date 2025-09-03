@@ -16,7 +16,7 @@ public class ScholarshipApplyFormRepository implements PanacheRepository<Scholar
                         from ScholarshipApplyForm f
                         join f.student s
                         join s.personalAcademicInfo p
-                        where (:studentId is null or s.id = :studentId)
+                        where (:studentId is null or s.personalAcademicInfo.facultyNumber = :studentId)
                           and (:specialty is null or p.specialty = :specialty)
                           and (:type is null or f.scholarshipType= :type)
                         """, ScholarshipApplyForm.class)

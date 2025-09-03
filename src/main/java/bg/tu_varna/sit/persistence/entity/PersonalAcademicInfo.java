@@ -14,7 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class PersonalAcademicInfo {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -49,4 +48,35 @@ public class PersonalAcademicInfo {
     private Integer studentGroup;
     private Character subGroup;
 
+
+    public PersonalAcademicInfo copy() {
+        return PersonalAcademicInfo.builder()
+                .id(this.id)
+                .email(this.email)
+                .firstName(this.firstName)
+                .secondName(this.secondName)
+                .lastName(this.lastName)
+                .egn(this.egn)
+                .address(this.address)
+                .phoneNumber(this.phoneNumber)
+                .placeOfResidence(this.placeOfResidence)
+                .streetName(this.streetName)
+                .streetNumber(this.streetNumber)
+                .entrance(this.entrance)
+                .floor(this.floor)
+                .flatNumber(this.flatNumber)
+                .facultyNumber(this.facultyNumber)
+                .courseYear(this.courseYear)
+                .semester(this.semester)
+                .degreeLevel(this.degreeLevel)
+                .studentStatus(this.studentStatus)
+                .faculty(this.faculty)
+                .department(this.department)
+                .specialty(this.specialty)
+                .studentGroup(this.studentGroup)
+                .subGroup(this.subGroup)
+                .build();
+    }
+
 }
+

@@ -17,12 +17,10 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class HealthInsuranceApplyOperationProcessor implements HealthInsuranceApplyOperation {
-
     @Inject
     HealthInsuranceApplyFormRepository healthInsuranceApplyFormRepository;
     @Inject
     StudentContext studentContext;
-
     @Override
     @Transactional
     public HealthInsuranceApplyResponse process(HealthInsuranceApplyRequest request) {

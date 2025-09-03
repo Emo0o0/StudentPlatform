@@ -9,6 +9,7 @@ import bg.tu_varna.sit.api.inputoutput.student.getstats.GetStudentStatsRequest;
 import bg.tu_varna.sit.api.inputoutput.student.getsubjectstats.GetSubjectStatsOperation;
 import bg.tu_varna.sit.api.inputoutput.student.getsubjectstats.GetSubjectStatsRequest;
 
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -16,6 +17,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 
 @Path("/query")
+@Authenticated
 public class QueryResource {
 
     @Inject

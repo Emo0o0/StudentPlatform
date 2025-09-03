@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 public class ScholarshipApplyForm {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long formId;

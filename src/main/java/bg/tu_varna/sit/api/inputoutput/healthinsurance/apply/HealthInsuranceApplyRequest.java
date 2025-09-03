@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HealthInsuranceApplyRequest implements OperationRequest {
-
     private PersonalAcademicInfoDTO personalAcademicInfo;
     private Boolean isReceivingWorkRelatedIncome;
     private Boolean isReceivingPension;

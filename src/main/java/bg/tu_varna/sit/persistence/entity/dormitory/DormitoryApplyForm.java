@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class DormitoryApplyForm {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long formId;
@@ -38,7 +37,6 @@ public class DormitoryApplyForm {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
-
     public void updateStatus(FormStatus status){
         this.formStatus=status;
     }

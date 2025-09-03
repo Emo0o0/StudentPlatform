@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Student {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -30,7 +29,6 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mark> marks = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HealthInsuranceApplyForm> healthInsuranceApplyForms;
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -41,6 +39,4 @@ public class Student {
     private List<DormitoryApplyForm> dormitoryApplyForms;
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ScholarshipApplyForm> scholarshipApplyForms;
-
-
 }

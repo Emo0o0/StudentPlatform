@@ -8,12 +8,13 @@ import bg.tu_varna.sit.api.inputoutput.dormitory.updatestatus.DormitoryFormUpdat
 import bg.tu_varna.sit.api.inputoutput.dormitory.updatestatus.DormitoryFormUpdateStatusRequest;
 import bg.tu_varna.sit.api.inputoutput.student.getdormitoryforms.StudentGetDormitoryApplyFormsOperation;
 import bg.tu_varna.sit.api.inputoutput.student.getdormitoryforms.StudentGetDormitoryApplyFormsRequest;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/dormitory")
-//@Authenticated
+@Authenticated
 public class DormitoryResource {
 
     @Inject

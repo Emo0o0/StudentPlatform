@@ -15,7 +15,7 @@ public class HealthInsuranceLateFormRepository implements PanacheRepository<Heal
                         from HealthInsuranceLateForm f
                         join f.student s
                         join s.personalAcademicInfo p
-                        where (:studentId is null or s.id = :studentId)
+                        where (:studentId is null or s.personalAcademicInfo.facultyNumber = :studentId)
                           and (:specialty is null or p.specialty = :specialty)
                         """, HealthInsuranceLateForm.class)
                 .setParameter("studentId", studentId)     // Long or null

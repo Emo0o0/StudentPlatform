@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 public class HealthInsuranceApplyForm {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long formId;
@@ -37,7 +36,6 @@ public class HealthInsuranceApplyForm {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "personal_info_id")
     private PersonalAcademicInfo personalAcademicInfo;
-
     public void updateStatus(FormStatus status){
         this.formStatus=status;
     }

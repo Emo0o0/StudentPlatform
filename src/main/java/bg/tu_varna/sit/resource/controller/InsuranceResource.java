@@ -18,12 +18,13 @@ import bg.tu_varna.sit.api.inputoutput.student.getinsuranceforms.late.StudentGet
 import bg.tu_varna.sit.api.inputoutput.student.getinsuranceforms.late.StudentGetInsuranceLateFormsRequest;
 import bg.tu_varna.sit.api.inputoutput.student.getinsuranceforms.terminate.StudentGetInsuranceTerminateFormsOperation;
 import bg.tu_varna.sit.api.inputoutput.student.getinsuranceforms.terminate.StudentGetInsuranceTerminateFormsRequest;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 @Path("/form/healthInsurance")
-//@Authenticated
+@Authenticated
 public class InsuranceResource {
 
     @Inject

@@ -15,7 +15,7 @@ public class DormitoryApplyFormRepository implements PanacheRepository<Dormitory
                         from DormitoryApplyForm f
                         join f.student s
                         join s.personalAcademicInfo p
-                        where (:studentId is null or s.id = :studentId)
+                        where (:studentId is null or s.personalAcademicInfo.facultyNumber = :studentId)
                           and (:specialty is null or p.specialty = :specialty)
                         """, DormitoryApplyForm.class)
                 .setParameter("studentId", studentId)     // Long or null

@@ -10,11 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class Mark {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String subject;
     private String mark;
     @Enumerated(EnumType.STRING)

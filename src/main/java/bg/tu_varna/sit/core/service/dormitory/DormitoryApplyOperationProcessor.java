@@ -54,6 +54,7 @@ public class DormitoryApplyOperationProcessor implements DormitoryApplyOperation
                 .flatNumber(request.getPersonalAcademicInfo().getFlatNumber())
                 .build();
 
+
         DormitoryApplyForm dormitoryApplyForm = DormitoryApplyForm.builder()
                 .personalAcademicInfo(personalAcademicInfo)
                 .buildingNumber(request.getBuildingNumber())

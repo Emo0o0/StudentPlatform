@@ -19,8 +19,8 @@ public class StudentGetDormitoryApplyFormsResponse {
     private List<FamilyMemberDTO> familyMembers;
 
     private boolean hasKeepRoomForm;
-    private int keepRoomFormBuildingNumber;
-    private int keepRoomFormRoomNumber;
+    private Integer keepRoomFormBuildingNumber;
+    private Integer keepRoomFormRoomNumber;
 
     private String formStatus;
 

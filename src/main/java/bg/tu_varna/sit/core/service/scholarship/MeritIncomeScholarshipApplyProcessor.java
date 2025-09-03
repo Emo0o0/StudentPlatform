@@ -38,8 +38,13 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
     @Transactional
     public MeritIncomeScholarshipApplyResponse process(MeritIncomeScholarshipApplyRequest request) {
 
+        FamilyStatus familyStatus = null;
+        if (request.getFamilyStatus() != null && request.getFamilyStatus() != "") {
+            familyStatus = FamilyStatus.valueOf(request.getFamilyStatus());
+        }
+
         MeritWithIncomeScholarshipInfo meritWithIncomeScholarshipInfo = MeritWithIncomeScholarshipInfo.builder()
-                .familyStatus(FamilyStatus.valueOf(request.getFamilyStatus()))
+                .familyStatus(familyStatus)
                 .familyIncomeInfo(mapFamilyIncome(request))
                 .build();
         meritWithIncomeScholarshipInfoRepository.persist(meritWithIncomeScholarshipInfo);
@@ -77,6 +82,7 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
         bankingInfoRepository.persist(bankingInfo);
 
         ScholarshipApplyForm scholarshipApplyForm = ScholarshipApplyForm.builder()
+                .personalAcademicInfo(personalAcademicInfo)
                 .previousGPA(request.getPreviousGPA())
                 .meritWithIncomeInfo(meritWithIncomeScholarshipInfo)
                 .scholarshipType(ScholarshipType.MERIT_WITH_INCOME)
@@ -90,6 +96,7 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
                 .success(true)
                 .build();
     }
+
 
     private FamilyIncomeInfo mapFamilyIncome(MeritIncomeScholarshipApplyRequest info) {
         return FamilyIncomeInfo.builder()
@@ -137,7 +144,7 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
                 .collect(Collectors.toList());
     }
 
-    private BigDecimal calculateTotalIncome(MeritIncomeScholarshipApplyRequest income){
+    private BigDecimal calculateTotalIncome(MeritIncomeScholarshipApplyRequest income) {
         return Stream.of(income.getSalaries(),
                         income.getPensions(),
                         income.getUnemploymentBenefits(),
@@ -150,6 +157,6 @@ public class MeritIncomeScholarshipApplyProcessor implements MeritIncomeScholars
                         income.getAlimony(),
                         income.getBusinessIncome(),
                         income.getOtherIncome())
-                .reduce(BigDecimal.ZERO,BigDecimal::add);
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
